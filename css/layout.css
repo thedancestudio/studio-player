@@ -1,1 +1,71 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
+html,
+body{
+    height:100%;
+    overflow:hidden;
+    font-family:Inter,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+}
+
+#app{
+
+    height:100vh;
+
+    display:grid;
+
+    grid-template-columns:260px 1fr;
+
+    grid-template-rows:
+        72px
+        1fr
+        88px;
+
+    grid-template-areas:
+        "sidebar topbar"
+        "sidebar content"
+        "player player";
+}
+
+#sidebar{
+
+    grid-area:sidebar;
+
+    background:var(--surface);
+
+    border-right:1px solid var(--border);
+
+}
+
+#topbar{
+
+    grid-area:topbar;
+
+    border-bottom:1px solid var(--border);
+
+}
+
+#content{
+
+    grid-area:content;
+
+    overflow:auto;
+
+    padding:32px;
+
+}
+
+#player{
+
+    grid-area:player;
+
+    border-top:1px solid var(--border);
+
+    background:var(--surface);
+
+}
