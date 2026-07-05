@@ -1,1 +1,65 @@
+h1,h2,h3,h4{
 
+    font-family:var(--font-heading);
+
+}
+
+h1{
+
+    font-size:var(--font-xl);
+
+    margin-bottom:var(--space-5);
+
+}
+
+small{
+
+    color:var(--color-text-muted);
+
+}
+
+a{
+
+    text-decoration:none;
+
+    color:inherit;
+
+}
+
+.material-symbols-rounded{
+
+    font-size:22px;
+
+    user-select:none;
+
+}
+
+button{
+
+    font:inherit;
+
+    border:none;
+
+    cursor:pointer;
+
+}
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:var(--color-surface-3);
+
+    border-radius:999px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:var(--color-accent);
+
+}
