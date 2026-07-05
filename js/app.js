@@ -1,12 +1,23 @@
-import { renderSidebar } from "./ui/sidebar.js";
-import { renderTopBar } from "./ui/topbar.js";
-import { renderPlayer } from "./ui/playerbar.js";
+import { Sidebar } from "./ui/sidebar.js";
 
-renderSidebar();
-renderTopBar();
-renderPlayer();
+function render() {
 
-document.querySelector("#content").innerHTML = `
-    <h1>Studio Player</h1>
-    <p>Welcome.</p>
-`;
+    document.getElementById("sidebar").innerHTML = Sidebar();
+
+    document.getElementById("topbar").innerHTML = "";
+
+    document.getElementById("content").innerHTML = `
+        <h1>Welcome</h1>
+
+        <p>
+            Studio Player is loading...
+        </p>
+    `;
+
+    document.getElementById("player").innerHTML = "";
+
+}
+
+window.addEventListener("hashchange", render);
+
+render();
