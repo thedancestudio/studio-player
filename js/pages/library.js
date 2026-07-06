@@ -1,22 +1,67 @@
-import { tracks } from "../mock/tracks.js";
+import { albums } from "../mock/albums.js";
 
 export function LibraryPage() {
 
-    return `
-        <section class="library">
+    return {
 
-            <div class="library-grid">
+        title: "Library",
 
-                ${tracks.map(t => `
-                    <div class="track-card">
-                        <div class="track-title">${t.title}</div>
-                        <div class="track-meta">${t.artist}</div>
-                        <div class="track-duration">${t.duration}</div>
+        subtitle: "Browse your music collection",
+
+        actions: `
+            <span class="material-symbols-rounded">
+                search
+            </span>
+        `,
+
+        content: `
+
+            <div class="library-tabs">
+
+                <button class="active">Albums</button>
+
+                <button>Artists</button>
+
+                <button>Songs</button>
+
+            </div>
+
+            <div class="album-grid">
+
+                ${albums.map(album => `
+
+                    <div class="album-card">
+
+                        <div class="album-art">
+
+                            <span class="material-symbols-rounded">
+
+                                album
+
+                            </span>
+
+                        </div>
+
+                        <div class="album-title">
+
+                            ${album.title}
+
+                        </div>
+
+                        <div class="album-artist">
+
+                            ${album.artist}
+
+                        </div>
+
                     </div>
+
                 `).join("")}
 
             </div>
 
-        </section>
-    `;
+        `
+
+    };
+
 }
