@@ -1,20 +1,21 @@
 import { Sidebar } from "./ui/sidebar.js";
+import { TopBar } from "./ui/topbar.js";
 import { getCurrentPage } from "./router.js";
 
-function render() {
+function render(){
 
-    document.getElementById("sidebar").innerHTML = Sidebar();
+    document.getElementById("sidebar").innerHTML=Sidebar();
 
-    document.getElementById("topbar").innerHTML = "";
+    document.getElementById("topbar").innerHTML=TopBar();
 
-    document.getElementById("player").innerHTML = "";
+    document.getElementById("player").innerHTML="";
 
-    const Page = getCurrentPage();
+    const Page=getCurrentPage();
 
-    document.getElementById("content").innerHTML = Page();
+    document.getElementById("content").innerHTML=Page();
 
 }
 
-window.addEventListener("hashchange", render);
+window.addEventListener("hashchange",render);
 
 render();
