@@ -6,15 +6,19 @@ function render() {
 
     document.getElementById("topbar").innerHTML = "";
 
+    document.getElementById("player").innerHTML = "";
+
     document.getElementById("content").innerHTML = `
+
         <h1>Welcome</h1>
 
         <p>
-            Studio Player is loading...
-        </p>
-    `;
 
-    document.getElementById("player").innerHTML = "";
+            Studio Player is under construction.
+
+        </p>
+
+    `;
 
 }
 
