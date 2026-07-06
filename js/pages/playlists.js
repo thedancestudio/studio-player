@@ -1,32 +1,8 @@
-const playlists = [
-    {
-        id: 1,
-        name: "Spring Recital 2027",
-        tracks: 72,
-        duration: "2 hr 43 min"
-    },
-    {
-        id: 2,
-        name: "Christmas Show",
-        tracks: 34,
-        duration: "1 hr 28 min"
-    },
-    {
-        id: 3,
-        name: "Competition Music",
-        tracks: 18,
-        duration: "51 min"
-    }
-];
-
-const currentTracks = [
-    { number: 1, title: "Opening Number", artist: "Studio Orchestra", duration: "2:31" },
-    { number: 2, title: "Ballet Suite", artist: "Studio Orchestra", duration: "3:48" },
-    { number: 3, title: "Tap Finale", artist: "Studio Orchestra", duration: "2:12" },
-    { number: 4, title: "Curtain Call", artist: "Studio Orchestra", duration: "1:54" }
-];
+import { state, getCurrentPlaylist } from "../state.js";
 
 export function PlaylistsPage() {
+
+    const playlist = getCurrentPlaylist();
 
     return {
 
@@ -48,16 +24,23 @@ export function PlaylistsPage() {
 
         <h3>Playlists</h3>
 
-        ${playlists.map((playlist, index) => `
+        ${state.playlists.map(p => `
 
-            <div class="playlist-item ${index === 0 ? "active" : ""}">
+            <div
+                class="playlist-item ${p.id === state.selectedPlaylistId ? "active" : ""}"
+                data-playlist="${p.id}"
+            >
 
                 <div class="playlist-name">
-                    ${playlist.name}
+
+                    ${p.name}
+
                 </div>
 
                 <div class="playlist-meta">
-                    ${playlist.tracks} Tracks • ${playlist.duration}
+
+                    ${p.tracks.length} Tracks
+
                 </div>
 
             </div>
@@ -72,9 +55,9 @@ export function PlaylistsPage() {
 
             <div>
 
-                <h2>Spring Recital 2027</h2>
+                <h2>${playlist.name}</h2>
 
-                <p>72 Tracks</p>
+                <p>${playlist.tracks.length} Tracks</p>
 
             </div>
 
@@ -88,13 +71,13 @@ export function PlaylistsPage() {
 
         <div class="track-list">
 
-            ${currentTracks.map(track => `
+            ${playlist.tracks.map((track,index)=>`
 
                 <div class="track-row">
 
                     <div class="track-number">
 
-                        ${track.number}
+                        ${index+1}
 
                     </div>
 
