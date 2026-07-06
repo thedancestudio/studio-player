@@ -43,6 +43,10 @@ export class App {
 
         this.content.innerHTML = page.content;
 
+        if (typeof page.mounted === "function") {
+            page.mounted();
+        }        
+
         this.player.innerHTML = "";
 
     }
