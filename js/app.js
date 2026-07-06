@@ -1,4 +1,5 @@
 import { Sidebar } from "./ui/sidebar.js";
+import { getCurrentPage } from "./router.js";
 
 function render() {
 
@@ -8,17 +9,9 @@ function render() {
 
     document.getElementById("player").innerHTML = "";
 
-    document.getElementById("content").innerHTML = `
+    const Page = getCurrentPage();
 
-        <h1>Welcome</h1>
-
-        <p>
-
-            Studio Player is under construction.
-
-        </p>
-
-    `;
+    document.getElementById("content").innerHTML = Page();
 
 }
 
