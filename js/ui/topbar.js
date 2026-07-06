@@ -1,13 +1,16 @@
-export function TopBar() {
+export function TopBar(page) {
 
     return `
         <div class="topbar-title">
-            <h1>Library</h1>
-            <small>Browse your music</small>
+            <h1>${page.title}</h1>
+            <small>${page.subtitle}</small>
         </div>
 
         <div class="topbar-actions">
-            <span class="material-symbols-rounded">search</span>
+
+            ${page.actions || ""}
+
         </div>
     `;
+
 }
