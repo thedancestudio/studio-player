@@ -1,55 +1,42 @@
-const navItems = [
-    {
-        icon: "theater_comedy",
-        label: "Productions",
-        route: "#/productions"
-    },
-    {
-        icon: "library_music",
-        label: "Library",
-        route: "#/library"
-    },
-    {
-        icon: "queue_music",
-        label: "Queue",
-        route: "#/queue"
-    },
-    {
-        icon: "search",
-        label: "Search",
-        route: "#/search"
-    },
-    {
-        icon: "settings",
-        label: "Settings",
-        route: "#/settings"
-    }
-];
+import { navigation, settingsNavigation } from "../data/navigation.js";
+
+function buildNav(items, current) {
+
+    return items.map(item => `
+
+        <a
+            class="nav-item ${current === item.route ? "active" : ""}"
+            href="${item.route}"
+        >
+
+            <span class="material-symbols-rounded">
+                ${item.icon}
+            </span>
+
+            <span>
+                ${item.label}
+            </span>
+
+        </a>
+
+    `).join("");
+
+}
 
 export function Sidebar() {
 
     const current = location.hash || "#/productions";
 
-    const links = navItems.map(item => `
-        <a
-            class="nav-item ${current === item.route ? "active" : ""}"
-            href="${item.route}"
-        >
-            <span class="material-symbols-rounded">
-                ${item.icon}
-            </span>
-
-            <span class="label">
-                ${item.label}
-            </span>
-        </a>
-    `).join("");
-
     return `
+
         <div class="sidebar-header">
 
-            <div class="logo-circle">
-                ♫
+            <div class="logo">
+
+                <span class="material-symbols-rounded">
+                    music_note
+                </span>
+
             </div>
 
             <div>
@@ -62,10 +49,18 @@ export function Sidebar() {
 
         </div>
 
-        <nav>
+        <nav class="sidebar-nav">
 
-            ${links}
+            ${buildNav(navigation, current)}
 
         </nav>
+
+        <div class="sidebar-footer">
+
+            ${buildNav(settingsNavigation, current)}
+
+        </div>
+
     `;
+
 }
