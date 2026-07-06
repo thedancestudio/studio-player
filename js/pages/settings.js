@@ -1,11 +1,7 @@
 export function SettingsPage() {
-
     return `
-
-        <h1>Settings</h1>
-
-        <p>Application settings.</p>
-
+        <div class="placeholder">
+            <h1>Settings</h1>
+        </div>
     `;
-
 }
