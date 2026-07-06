@@ -17,8 +17,8 @@ export const state = {
             id: 2,
             name: "Christmas Show",
             tracks: [
-                { id: 1, title: "Snow Waltz", artist: "Studio Orchestra", duration: "2:47" },
-                { id: 2, title: "Toy Soldiers", artist: "Studio Orchestra", duration: "3:05" }
+                { id: 5, title: "Snow Waltz", artist: "Studio Orchestra", duration: "2:47" },
+                { id: 6, title: "Toy Soldiers", artist: "Studio Orchestra", duration: "3:05" }
             ]
         },
 
@@ -26,7 +26,7 @@ export const state = {
             id: 3,
             name: "Competition Music",
             tracks: [
-                { id: 1, title: "Lyrical Solo", artist: "Studio Orchestra", duration: "2:41" }
+                { id: 7, title: "Lyrical Solo", artist: "Studio Orchestra", duration: "2:41" }
             ]
         }
 
@@ -36,31 +36,32 @@ export const state = {
 
 };
 
-export function getCurrentPlaylist() {
-
-    return state.playlists.find(
-        p => p.id === state.selectedPlaylistId
-    );
-
-}
-
 const listeners = [];
 
-export function subscribe(callback) {
-
-    listeners.push(callback);
-
+export function subscribe(fn) {
+    listeners.push(fn);
 }
 
-export function notify() {
+function notify() {
+    listeners.forEach(fn => fn());
+}
 
-    listeners.forEach(callback => callback());
-
+export function getCurrentPlaylist() {
+    return state.playlists.find(p => p.id === state.selectedPlaylistId);
 }
 
 export function selectPlaylist(id) {
-
     state.selectedPlaylistId = Number(id);
+    notify();
+}
+
+export function moveTrack(oldIndex, newIndex) {
+
+    const playlist = getCurrentPlaylist();
+
+    const track = playlist.tracks.splice(oldIndex, 1)[0];
+
+    playlist.tracks.splice(newIndex, 0, track);
 
     notify();
 
