@@ -1,21 +1,5 @@
-import { Sidebar } from "./ui/sidebar.js";
-import { TopBar } from "./ui/topbar.js";
-import { getCurrentPage } from "./router.js";
+import { App } from "./app/App.js";
 
-function render(){
+const app = new App();
 
-    document.getElementById("sidebar").innerHTML=Sidebar();
-
-    document.getElementById("topbar").innerHTML=TopBar();
-
-    document.getElementById("player").innerHTML="";
-
-    const Page=getCurrentPage();
-
-    document.getElementById("content").innerHTML=Page();
-
-}
-
-window.addEventListener("hashchange",render);
-
-render();
+app.start();
