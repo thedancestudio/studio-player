@@ -11,5 +11,11 @@ const routes = {
 };
 
 export function getCurrentPage() {
-    return routes[location.hash] || LibraryPage;
+
+    const hash = location.hash || "#/library";
+
+    const page = routes[hash] || LibraryPage;
+
+    return page();
+
 }
