@@ -172,3 +172,37 @@
     }
 
 }
+
+.track-row{
+
+    cursor:grab;
+
+    user-select:none;
+
+}
+
+.track-row:active{
+
+    cursor:grabbing;
+
+}
+
+.dragging{
+
+    opacity:.35;
+
+    background:rgba(255,20,147,.2);
+
+}
+
+.sortable-chosen{
+
+    background:rgba(255,20,147,.12);
+
+}
+
+.sortable-drag{
+
+    cursor:grabbing;
+
+}
