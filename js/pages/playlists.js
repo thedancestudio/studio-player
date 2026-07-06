@@ -1,8 +1,9 @@
 import {
     state,
-    getCurrentPlaylist,
+    subscribe,
     selectPlaylist,
-    subscribe
+    getCurrentPlaylist,
+    moveTrack
 } from "../state.js";
 
 function renderPlaylistWorkspace() {
@@ -20,7 +21,7 @@ function renderPlaylistWorkspace() {
         ${state.playlists.map(p => `
 
             <div
-                class="playlist-item ${p.id === state.selectedPlaylistId ? "active" : ""}"
+                class="playlist-item ${p.id===state.selectedPlaylistId?"active":""}"
                 data-playlist="${p.id}"
             >
 
@@ -58,15 +59,18 @@ function renderPlaylistWorkspace() {
 
         </div>
 
-        <div class="track-list">
+        <div class="track-list" id="track-list">
 
             ${playlist.tracks.map((track,index)=>`
 
-                <div class="track-row">
+                <div
+                    class="track-row"
+                    data-track="${track.id}"
+                >
 
                     <div class="track-number">
 
-                        ${index + 1}
+                        ${index+1}
 
                     </div>
 
@@ -106,45 +110,67 @@ function renderPlaylistWorkspace() {
 
 }
 
-function wireEvents(container) {
+function wireEvents(root){
 
-    container.querySelectorAll(".playlist-item").forEach(item => {
+    root.querySelectorAll(".playlist-item").forEach(item=>{
 
-        item.addEventListener("click", () => {
+        item.onclick=()=>{
 
             selectPlaylist(item.dataset.playlist);
 
-        });
+        };
+
+    });
+
+    const list=root.querySelector("#track-list");
+
+    new Sortable(list,{
+
+        animation:150,
+
+        ghostClass:"dragging",
+
+        delayOnTouchOnly:true,
+
+        delay:120,
+
+        onEnd(evt){
+
+            if(evt.oldIndex===evt.newIndex) return;
+
+            moveTrack(evt.oldIndex,evt.newIndex);
+
+        }
 
     });
 
 }
 
-export function PlaylistsPage() {
+export function PlaylistsPage(){
 
-    return {
+    return{
 
-        title: "Playlists",
+        title:"Playlists",
 
-        subtitle: "Build and organize performances",
+        subtitle:"Build and organize performances",
 
-        actions: `
+        actions:`
             <button class="primary-button">
                 New Playlist
             </button>
         `,
 
-        content: `
+        content:`
             <div id="playlist-page-root"></div>
         `,
 
-        mounted() {
+        mounted(){
 
-            const root = document.getElementById("playlist-page-root");
+            const root=document.getElementById("playlist-page-root");
 
-            function render() {
+            function render(){
 
-                root.innerHTML = renderPlaylistWorkspace();
+                root.innerHTML=renderPlaylistWorkspace();
 
                 wireEvents(root);
 
