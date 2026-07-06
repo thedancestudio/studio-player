@@ -1,64 +1,41 @@
 import { navigation, settingsNavigation } from "../data/navigation.js";
 
-function buildNav(items, currentRoute) {
+function build(items, route) {
 
     return items.map(item => `
-
-        <a
-            class="nav-item ${item.route === currentRoute ? "active" : ""}"
-            href="${item.route}"
-        >
+        <a class="nav-item ${item.route === route ? "active" : ""}"
+           href="${item.route || "#"}">
 
             <span class="material-symbols-rounded">
                 ${item.icon}
             </span>
 
-            <span class="label">
-                ${item.label}
-            </span>
+            <span>${item.label}</span>
 
         </a>
-
     `).join("");
 
 }
 
-export function Sidebar(currentRoute) {
+export function Sidebar(route) {
 
     return `
-
         <div class="sidebar-header">
-
             <div class="logo">
-
-                <span class="material-symbols-rounded">
-                    music_note
-                </span>
-
+                <span class="material-symbols-rounded">music_note</span>
             </div>
-
             <div>
-
                 <h2>Studio Player</h2>
-
                 <small>The Dance Studio</small>
-
             </div>
-
         </div>
 
         <nav class="sidebar-nav">
-
-            ${buildNav(navigation, currentRoute)}
-
+            ${build(navigation, route)}
         </nav>
 
         <div class="sidebar-footer">
-
-            ${buildNav(settingsNavigation, currentRoute)}
-
+            ${build(settingsNavigation, route)}
         </div>
-
     `;
-
 }
