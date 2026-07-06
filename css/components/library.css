@@ -1,0 +1,11 @@
+.library-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+}
+
+.track-card {
+    background: #1a1a1f;
+    padding: 12px;
+    border-radius: 10px;
+}
