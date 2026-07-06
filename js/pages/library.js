@@ -1,11 +1,22 @@
+import { tracks } from "../mock/tracks.js";
+
 export function LibraryPage() {
 
     return `
+        <section class="library">
 
-        <h1>Library</h1>
+            <div class="library-grid">
 
-        <p>Your music library will appear here.</p>
+                ${tracks.map(t => `
+                    <div class="track-card">
+                        <div class="track-title">${t.title}</div>
+                        <div class="track-meta">${t.artist}</div>
+                        <div class="track-duration">${t.duration}</div>
+                    </div>
+                `).join("")}
 
+            </div>
+
+        </section>
     `;
-
 }
