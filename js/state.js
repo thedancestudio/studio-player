@@ -43,3 +43,25 @@ export function getCurrentPlaylist() {
     );
 
 }
+
+const listeners = [];
+
+export function subscribe(callback) {
+
+    listeners.push(callback);
+
+}
+
+export function notify() {
+
+    listeners.forEach(callback => callback());
+
+}
+
+export function selectPlaylist(id) {
+
+    state.selectedPlaylistId = Number(id);
+
+    notify();
+
+}
