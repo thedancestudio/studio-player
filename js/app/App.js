@@ -5,33 +5,39 @@ import { getCurrentPage } from "../router.js";
 export class App {
 
     constructor() {
-
         this.sidebar = document.getElementById("sidebar");
         this.topbar = document.getElementById("topbar");
         this.content = document.getElementById("content");
         this.player = document.getElementById("player");
 
+        this.currentRoute = location.hash || "#/library";
     }
 
     start() {
 
-        this.renderShell();
+        if (!location.hash) {
+            location.hash = "#/library";
+            return;
+        }
 
+        this.renderShell();
         this.renderPage();
 
         window.addEventListener("hashchange", () => {
-
+            this.currentRoute = location.hash;
             this.renderPage();
-
         });
 
     }
 
     renderShell() {
 
-        this.sidebar.innerHTML = Sidebar();
+        this.sidebar.innerHTML = Sidebar(this.currentRoute);
 
         this.topbar.innerHTML = TopBar();
+
+        // Player comes later
+        this.player.innerHTML = "";
 
     }
 
@@ -41,7 +47,8 @@ export class App {
 
         this.content.innerHTML = Page();
 
-        this.sidebar.innerHTML = Sidebar();
+        // Re-render sidebar only so the active item updates
+        this.sidebar.innerHTML = Sidebar(this.currentRoute);
 
     }
 
