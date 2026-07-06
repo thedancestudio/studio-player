@@ -1,11 +1,11 @@
 import { navigation, settingsNavigation } from "../data/navigation.js";
 
-function buildNav(items, current) {
+function buildNav(items, currentRoute) {
 
     return items.map(item => `
 
         <a
-            class="nav-item ${current === item.route ? "active" : ""}"
+            class="nav-item ${item.route === currentRoute ? "active" : ""}"
             href="${item.route}"
         >
 
@@ -13,7 +13,7 @@ function buildNav(items, current) {
                 ${item.icon}
             </span>
 
-            <span>
+            <span class="label">
                 ${item.label}
             </span>
 
@@ -23,9 +23,7 @@ function buildNav(items, current) {
 
 }
 
-export function Sidebar() {
-
-    const current = location.hash || "#/productions";
+export function Sidebar(currentRoute) {
 
     return `
 
@@ -51,13 +49,13 @@ export function Sidebar() {
 
         <nav class="sidebar-nav">
 
-            ${buildNav(navigation, current)}
+            ${buildNav(navigation, currentRoute)}
 
         </nav>
 
         <div class="sidebar-footer">
 
-            ${buildNav(settingsNavigation, current)}
+            ${buildNav(settingsNavigation, currentRoute)}
 
         </div>
 
