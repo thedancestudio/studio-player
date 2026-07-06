@@ -1,22 +1,15 @@
-import { state, getCurrentPlaylist } from "../state.js";
+import {
+    state,
+    getCurrentPlaylist,
+    selectPlaylist,
+    subscribe
+} from "../state.js";
 
-export function PlaylistsPage() {
+function renderPlaylistWorkspace() {
 
     const playlist = getCurrentPlaylist();
 
-    return {
-
-        title: "Playlists",
-
-        subtitle: "Build and organize performances",
-
-        actions: `
-            <button class="primary-button">
-                New Playlist
-            </button>
-        `,
-
-        content: `
+    return `
 
 <div class="playlist-workspace">
 
@@ -32,15 +25,11 @@ export function PlaylistsPage() {
             >
 
                 <div class="playlist-name">
-
                     ${p.name}
-
                 </div>
 
                 <div class="playlist-meta">
-
                     ${p.tracks.length} Tracks
-
                 </div>
 
             </div>
@@ -77,7 +66,7 @@ export function PlaylistsPage() {
 
                     <div class="track-number">
 
-                        ${index+1}
+                        ${index + 1}
 
                     </div>
 
@@ -113,7 +102,59 @@ export function PlaylistsPage() {
 
 </div>
 
-`
+`;
+
+}
+
+function wireEvents(container) {
+
+    container.querySelectorAll(".playlist-item").forEach(item => {
+
+        item.addEventListener("click", () => {
+
+            selectPlaylist(item.dataset.playlist);
+
+        });
+
+    });
+
+}
+
+export function PlaylistsPage() {
+
+    return {
+
+        title: "Playlists",
+
+        subtitle: "Build and organize performances",
+
+        actions: `
+            <button class="primary-button">
+                New Playlist
+            </button>
+        `,
+
+        content: `
+            <div id="playlist-page-root"></div>
+        `,
+
+        mounted() {
+
+            const root = document.getElementById("playlist-page-root");
+
+            function render() {
+
+                root.innerHTML = renderPlaylistWorkspace();
+
+                wireEvents(root);
+
+            }
+
+            subscribe(render);
+
+            render();
+
+        }
 
     };
 
