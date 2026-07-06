@@ -8,14 +8,13 @@ export const navigation = [
     {
         id: "playlists",
         label: "Playlists",
-        icon: "playlist_play",
+        icon: "queue_music",
         route: "#/playlists"
     },
     {
         id: "queue",
         label: "Queue",
-        icon: "queue_music",
-        route: "#/queue"
+        icon: "music_note"
     }
 ];
 
