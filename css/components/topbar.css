@@ -1,43 +1,5 @@
-#topbar{
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    padding:0 32px;
-
-}
-
-.topbar-title{
-
-    display:flex;
-
-    flex-direction:column;
-
-}
-
-.topbar-title h1{
-
-    font-size:1.3rem;
-
-    margin:0;
-
-}
-
-.topbar-title small{
-
-    color:var(--color-text-muted);
-
-}
-
-.topbar-right{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:18px;
-
+#topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
