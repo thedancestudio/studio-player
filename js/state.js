@@ -66,3 +66,22 @@ export function moveTrack(oldIndex, newIndex) {
     notify();
 
 }
+export function addTrackToCurrentPlaylist(track){
+
+    const playlist=getCurrentPlaylist();
+
+    playlist.tracks.push({
+
+        id:track.id,
+
+        title:track.title,
+
+        artist:track.artist,
+
+        duration:track.duration
+
+    });
+
+    notify();
+
+}
