@@ -206,3 +206,53 @@
     cursor:grabbing;
 
 }
+
+.library-column{
+
+    min-width:0;
+
+}
+
+@media (max-width:1200px){
+
+    .playlist-workspace{
+
+        grid-template-columns:260px 1fr;
+
+    }
+
+    .library-column{
+
+        grid-column:1 / -1;
+
+    }
+
+}
+
+@media (max-width:900px){
+
+    .playlist-workspace{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .playlist-sidebar{
+
+        order:1;
+
+    }
+
+    .playlist-main{
+
+        order:2;
+
+    }
+
+    .library-column{
+
+        order:3;
+
+    }
+
+}
