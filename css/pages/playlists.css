@@ -2,9 +2,9 @@
 
     display:grid;
 
-    grid-template-columns:320px 1fr;
+    grid-template-columns:280px 1fr 360px;
 
-    gap:28px;
+    gap:24px;
 
     height:100%;
 
