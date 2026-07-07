@@ -6,7 +6,9 @@ import {
     moveTrack
 } from "../state.js";
 
-function renderPlaylistWorkspace() {
+import { LibraryPanel } from "../ui/libraryPanel.js";
+
+function renderWorkspace() {
 
     const playlist = getCurrentPlaylist();
 
@@ -18,7 +20,7 @@ function renderPlaylistWorkspace() {
 
         <h3>Playlists</h3>
 
-        ${state.playlists.map(p => `
+        ${state.playlists.map(p=>`
 
             <div
                 class="playlist-item ${p.id===state.selectedPlaylistId?"active":""}"
@@ -26,11 +28,15 @@ function renderPlaylistWorkspace() {
             >
 
                 <div class="playlist-name">
+
                     ${p.name}
+
                 </div>
 
                 <div class="playlist-meta">
+
                     ${p.tracks.length} Tracks
+
                 </div>
 
             </div>
@@ -59,7 +65,10 @@ function renderPlaylistWorkspace() {
 
         </div>
 
-        <div class="track-list" id="track-list">
+        <div
+            id="track-list"
+            class="track-list"
+        >
 
             ${playlist.tracks.map((track,index)=>`
 
@@ -104,6 +113,12 @@ function renderPlaylistWorkspace() {
 
     </section>
 
+    <aside class="library-column">
+
+        ${LibraryPanel()}
+
+    </aside>
+
 </div>
 
 `;
@@ -130,13 +145,17 @@ function wireEvents(root){
 
         ghostClass:"dragging",
 
-        delayOnTouchOnly:true,
-
         delay:120,
+
+        delayOnTouchOnly:true,
 
         onEnd(evt){
 
-            if(evt.oldIndex===evt.newIndex) return;
+            if(evt.oldIndex===evt.newIndex){
+
+                return;
+
+            }
 
             moveTrack(evt.oldIndex,evt.newIndex);
 
@@ -170,7 +189,7 @@ export function PlaylistsPage(){
 
             function render(){
 
-                root.innerHTML=renderPlaylistWorkspace();
+                root.innerHTML=renderWorkspace();
 
                 wireEvents(root);
 
