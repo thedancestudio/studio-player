@@ -9,7 +9,7 @@ import {
 
 import {
     LibraryPanel,
-    mountLibrary
+    bindLibraryEvents
 } from "../ui/libraryPanel.js";
 
 function renderWorkspace() {
@@ -197,13 +197,20 @@ export function PlaylistsPage(){
                 root.innerHTML = renderWorkspace();
         
                 wireEvents(root);
-        
-                mountLibrary(track => {
-        
-                    addTrackToCurrentPlaylist(track);
-        
-                });
-        
+                        
+                bindLibraryEvents(
+                
+                    root,
+                
+                    track=>{
+                
+                        addTrackToCurrentPlaylist(track);
+                
+                    },
+                
+                    render
+                
+                );        
             }
         
             subscribe(render);
