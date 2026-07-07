@@ -3,10 +3,14 @@ import {
     subscribe,
     selectPlaylist,
     getCurrentPlaylist,
-    moveTrack
+    moveTrack,
+    addTrackToCurrentPlaylist
 } from "../state.js";
 
-import { LibraryPanel } from "../ui/libraryPanel.js";
+import {
+    LibraryPanel,
+    mountLibrary
+} from "../ui/libraryPanel.js";
 
 function renderWorkspace() {
 
@@ -165,6 +169,7 @@ function wireEvents(root){
 
 }
 
+
 export function PlaylistsPage(){
 
     return{
@@ -184,21 +189,27 @@ export function PlaylistsPage(){
         `,
 
         mounted(){
-
-            const root=document.getElementById("playlist-page-root");
-
+        
+            const root = document.getElementById("playlist-page-root");
+        
             function render(){
-
-                root.innerHTML=renderWorkspace();
-
+        
+                root.innerHTML = renderWorkspace();
+        
                 wireEvents(root);
-
+        
+                mountLibrary(track => {
+        
+                    addTrackToCurrentPlaylist(track);
+        
+                });
+        
             }
-
+        
             subscribe(render);
-
+        
             render();
-
+        
         }
 
     };
