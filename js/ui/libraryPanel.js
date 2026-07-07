@@ -5,6 +5,7 @@ let selectedAlbum = null;
 let search = "";
 
 function filteredTracks() {
+
     return library.filter(track => {
 
         const text = (
@@ -16,9 +17,10 @@ function filteredTracks() {
         return text.includes(search.toLowerCase());
 
     });
+
 }
 
-function albums() {
+function renderAlbums() {
 
     const map = new Map();
 
@@ -27,219 +29,132 @@ function albums() {
         if (!map.has(track.album)) {
 
             map.set(track.album, {
-
                 title: track.album,
                 artist: track.artist,
                 artwork: track.artwork
-
             });
 
         }
 
     });
 
-    return [...map.values()];
+    return `
+        <div class="album-grid">
+            ${[...map.values()].map(album=>`
+
+                <div class="album-card"
+                     data-album="${album.title}">
+
+                    <div class="album-art">
+                        <span class="material-symbols-rounded">
+                            album
+                        </span>
+                    </div>
+
+                    <div class="album-title">
+                        ${album.title}
+                    </div>
+
+                    <div class="album-meta">
+                        ${album.artist}
+                    </div>
+
+                </div>
+
+            `).join("")}
+        </div>
+    `;
 
 }
 
-function artists() {
+function renderArtists() {
 
-    return [...new Set(filteredTracks().map(t => t.artist))];
-
-}
-
-function renderAlbums() {
+    const artists = [...new Set(
+        filteredTracks().map(t=>t.artist)
+    )];
 
     return `
+        <div class="artist-list">
 
-<div class="album-grid">
+            ${artists.map(name=>`
 
-${albums().map(album=>`
+                <div class="artist-row"
+                     data-artist="${name}">
 
-<div
-    class="album-card"
-    data-album="${album.title}"
->
+                    ${name}
 
-    <div class="album-art">
+                </div>
 
-        <span class="material-symbols-rounded">
+            `).join("")}
 
-            album
-
-        </span>
-
-    </div>
-
-    <div class="album-title">
-
-        ${album.title}
-
-    </div>
-
-    <div class="album-meta">
-
-        ${album.artist}
-
-    </div>
-
-</div>
-
-`).join("")}
-
-</div>
-
-`;
+        </div>
+    `;
 
 }
 
-function renderArtists(){
+function renderSongs(tracks){
 
     return `
+        <div class="song-list">
 
-<div class="artist-list">
+            ${tracks.map(track=>`
 
-${artists().map(name=>`
+                <div class="song-row"
+                     data-track="${track.id}">
 
-<div
-    class="artist-row"
-    data-artist="${name}"
->
+                    <div>
 
-${name}
+                        <div class="song-title">
+                            ${track.title}
+                        </div>
 
-</div>
+                        <div class="song-meta">
+                            ${track.artist}
+                        </div>
 
-`).join("")}
+                    </div>
 
-</div>
+                    <div>
+                        ${track.duration}
+                    </div>
 
-`;
+                </div>
 
-}
+            `).join("")}
 
-function renderSongs(){
-
-    return `
-
-<div class="song-list">
-
-${filteredTracks().map(track=>`
-
-<div
-    class="song-row"
-    data-track="${track.id}"
->
-
-<div>
-
-<div class="song-title">
-
-${track.title}
-
-</div>
-
-<div class="song-meta">
-
-${track.artist}
-
-</div>
-
-</div>
-
-<div>
-
-${track.duration}
-
-</div>
-
-</div>
-
-`).join("")}
-
-</div>
-
-`;
+        </div>
+    `;
 
 }
 
-function renderAlbumTracks(){
-
-    const tracks = filteredTracks().filter(
-        t => t.album === selectedAlbum
-    );
-
-    return `
-
-<button
-    class="back-button"
->
-
-← Albums
-
-</button>
-
-<div class="song-list">
-
-${tracks.map(track=>`
-
-<div
-    class="song-row"
-    data-track="${track.id}"
->
-
-<div>
-
-<div class="song-title">
-
-${track.title}
-
-</div>
-
-<div class="song-meta">
-
-${track.artist}
-
-</div>
-
-</div>
-
-<div>
-
-${track.duration}
-
-</div>
-
-</div>
-
-`).join("")}
-
-</div>
-
-`;
-
-}
-
-function body(){
+function renderBody(){
 
     if(selectedAlbum){
 
-        return renderAlbumTracks();
+        const tracks = filteredTracks().filter(
+            t=>t.album===selectedAlbum
+        );
 
+        return `
+            <button class="back-button">
+
+                ← Albums
+
+            </button>
+
+            ${renderSongs(tracks)}
+        `;
     }
 
     switch(mode){
 
         case "artists":
-
             return renderArtists();
 
         case "songs":
-
-            return renderSongs();
+            return renderSongs(filteredTracks());
 
         default:
-
             return renderAlbums();
 
     }
@@ -250,58 +165,49 @@ export function LibraryPanel(){
 
     return `
 
-<div
-    class="library-panel"
->
+<div class="library-panel">
 
-<div class="library-header">
+    <div class="library-header">
 
-<input
-    id="library-search"
-    class="library-search"
-    placeholder="Search..."
->
+        <input
+            id="library-search"
+            class="library-search"
+            placeholder="Search..."
+            value="${search}"
+        >
 
-</div>
+    </div>
 
-<div class="library-tabs">
+    <div class="library-tabs">
 
-<button
-class="${mode==="albums"?"active":""}"
-data-mode="albums"
->
+        <button class="${mode==="albums"?"active":""}"
+                data-mode="albums">
 
-Albums
+            Albums
 
-</button>
+        </button>
 
-<button
-class="${mode==="artists"?"active":""}"
-data-mode="artists"
->
+        <button class="${mode==="artists"?"active":""}"
+                data-mode="artists">
 
-Artists
+            Artists
 
-</button>
+        </button>
 
-<button
-class="${mode==="songs"?"active":""}"
-data-mode="songs"
->
+        <button class="${mode==="songs"?"active":""}"
+                data-mode="songs">
 
-Songs
+            Songs
 
-</button>
+        </button>
 
-</div>
+    </div>
 
-<div
-id="library-body"
->
+    <div id="library-body">
 
-${body()}
+        ${renderBody()}
 
-</div>
+    </div>
 
 </div>
 
@@ -309,62 +215,59 @@ ${body()}
 
 }
 
-export function mountLibrary(onTrackChosen){
+export function bindLibraryEvents(root,onTrackChosen,onRefresh){
 
-    const panel=document.querySelector(".library-panel");
-
-    panel.querySelector("#library-search").oninput=e=>{
+    root.querySelector("#library-search").oninput=e=>{
 
         search=e.target.value;
 
-        refresh(onTrackChosen);
+        onRefresh();
 
     };
 
-    panel.querySelectorAll("[data-mode]").forEach(button=>{
+    root.querySelectorAll("[data-mode]").forEach(button=>{
 
         button.onclick=()=>{
 
             mode=button.dataset.mode;
-
             selectedAlbum=null;
 
-            refresh(onTrackChosen);
+            onRefresh();
 
         };
 
     });
 
-    panel.querySelectorAll("[data-album]").forEach(card=>{
+    root.querySelectorAll("[data-album]").forEach(card=>{
 
         card.onclick=()=>{
 
             selectedAlbum=card.dataset.album;
 
-            refresh(onTrackChosen);
+            onRefresh();
 
         };
 
     });
 
-    panel.querySelectorAll(".back-button").forEach(button=>{
+    root.querySelectorAll(".back-button").forEach(button=>{
 
         button.onclick=()=>{
 
             selectedAlbum=null;
 
-            refresh(onTrackChosen);
+            onRefresh();
 
         };
 
     });
 
-    panel.querySelectorAll("[data-track]").forEach(song=>{
+    root.querySelectorAll("[data-track]").forEach(row=>{
 
-        song.ondblclick=()=>{
+        row.ondblclick=()=>{
 
-            const track=library.find(
-                t=>t.id===song.dataset.track
+            const track = library.find(
+                t=>t.id===row.dataset.track
             );
 
             onTrackChosen(track);
@@ -372,13 +275,5 @@ export function mountLibrary(onTrackChosen){
         };
 
     });
-
-}
-
-function refresh(callback){
-
-    document.querySelector(".library-column").innerHTML=LibraryPanel();
-
-    mountLibrary(callback);
 
 }
